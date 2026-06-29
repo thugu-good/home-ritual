@@ -26,34 +26,48 @@
       margin: 0 auto;
       min-height: 100dvh;
       position: relative;
-      overflow: hidden;
     }
     .screen { display: none; flex-direction: column; min-height: 100dvh; }
     .screen.active { display: flex; }
 
-    /* ── LOCK ── */
-    #s-lock { align-items: center; justify-content: center; text-align: center; padding: 2rem 1.5rem; padding-top: calc(2rem + env(safe-area-inset-top)); position: relative; }
-    .lock-top-row { position: absolute; top: calc(1.25rem + env(safe-area-inset-top)); right: 1.25rem; }
-    .icon-btn-sm { background: none; border: 0.5px solid var(--bc); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--sub); transition: all .15s; }
+    /* ── CHECKLIST (홈) ── */
+    #s-checklist {
+      padding: 1.5rem 1.25rem;
+      padding-top: calc(1.5rem + env(safe-area-inset-top));
+      padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+      overflow-y: auto;
+    }
+    .cl-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .cl-left { display: flex; flex-direction: column; gap: 2px; }
+    .cl-title { font-size: 20px; font-weight: 500; letter-spacing: -0.3px; }
+    .cl-date { font-size: 12px; color: var(--muted); }
+    .cl-right { display: flex; align-items: center; gap: 8px; }
+    .cl-pill { font-size: 12px; color: var(--accent); background: rgba(200,184,154,.12); border: 0.5px solid rgba(200,184,154,.2); border-radius: 99px; padding: 4px 11px; }
+    .icon-btn-sm { background: none; border: 0.5px solid var(--bc); border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--sub); transition: all .15s; }
     .icon-btn-sm:hover { border-color: var(--bh); color: var(--txt); }
-    .lock-icon { font-size: 36px; margin-bottom: 1.25rem; }
-    .lock-title { font-size: 24px; font-weight: 500; margin-bottom: 0.4rem; letter-spacing: -0.3px; }
-    .lock-sub { font-size: 15px; color: var(--sub); margin-bottom: 1.75rem; line-height: 1.6; }
-    .lock-bar-wrap { width: 240px; margin: 0 auto 0.5rem; }
-    .lock-bar-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 7px; }
-    .lock-bar { height: 3px; background: #2a2a2a; border-radius: 99px; overflow: hidden; }
-    .lock-bar-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width .4s ease; }
-    .lock-preview { width: 100%; max-width: 280px; margin: 1.25rem auto 1.75rem; display: flex; flex-direction: column; gap: 7px; }
-    .prev-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--card); border: 0.5px solid var(--bc); border-radius: 10px; font-size: 14px; color: var(--sub); }
-    .prev-item.done { color: var(--muted); }
-    .prev-dot { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid #555; flex-shrink: 0; }
-    .prev-item.done .prev-dot { background: var(--green); border-color: var(--green); }
-    .start-btn { padding: 15px 40px; background: var(--accent); color: #1a1200; border: none; border-radius: 99px; font-size: 16px; font-weight: 500; cursor: pointer; transition: transform .15s; }
-    .start-btn:active { transform: scale(.97); }
+    .prog-track { height: 3px; background: #2a2a2a; border-radius: 99px; overflow: hidden; margin-bottom: 1.25rem; }
+    .prog-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width .5s cubic-bezier(.34,1.56,.64,1); }
+    .task-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.1rem; }
+    .task-row { display: flex; align-items: center; gap: 12px; padding: 15px 16px; background: var(--card); border: 0.5px solid var(--bc); border-radius: 14px; transition: border-color .2s; }
+    .task-row:hover { border-color: var(--bh); }
+    .task-row.done { opacity: .4; }
+    .t-check { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid #444; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; transition: all .2s; }
+    .task-row.done .t-check { background: var(--green); border-color: var(--green); }
+    .t-info { flex: 1; min-width: 0; cursor: pointer; }
+    .t-name { font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .task-row.done .t-name { color: var(--muted); text-decoration: line-through; }
+    .t-hint { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .t-emoji { font-size: 20px; flex-shrink: 0; }
+    .add-row { display: flex; gap: 8px; }
+    .add-input { flex: 1; background: var(--card); border: 0.5px solid var(--bc); border-radius: 10px; padding: 11px 14px; font-size: 15px; color: var(--txt); outline: none; font-family: inherit; }
+    .add-input::placeholder { color: var(--muted); }
+    .add-input:focus { border-color: var(--bh); }
+    .add-btn { padding: 11px 16px; background: var(--card); border: 0.5px solid var(--bc); border-radius: 10px; color: var(--sub); font-size: 22px; cursor: pointer; transition: all .15s; display: flex; align-items: center; justify-content: center; width: 46px; }
+    .add-btn:hover { border-color: var(--bh); color: var(--txt); }
 
     /* ── MANAGE ── */
     #s-manage { padding-bottom: env(safe-area-inset-bottom); }
-    .mg-header { display: flex; align-items: center; gap: 10px; padding: calc(1.25rem + env(safe-area-inset-top)) 1.25rem 0; margin-bottom: 1.1rem; }
+    .mg-header { display: flex; align-items: center; gap: 10px; padding: calc(1.5rem + env(safe-area-inset-top)) 1.25rem 0; margin-bottom: 1.1rem; }
     .back-btn { background: none; border: 0.5px solid var(--bc); border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--sub); flex-shrink: 0; transition: all .15s; }
     .back-btn:hover { border-color: var(--bh); color: var(--txt); }
     .mg-title { font-size: 18px; font-weight: 500; letter-spacing: -0.3px; }
@@ -92,34 +106,9 @@
     .btn-cancel { padding: 12px 18px; background: none; border: 0.5px solid var(--bc); border-radius: 99px; color: var(--sub); font-size: 15px; cursor: pointer; font-family: inherit; }
     .btn-del { padding: 12px 18px; background: rgba(200,124,124,.1); border: 0.5px solid rgba(200,124,124,.25); border-radius: 99px; color: var(--red); font-size: 15px; cursor: pointer; font-family: inherit; }
 
-    /* ── CHECKLIST ── */
-    #s-checklist { padding: 1.25rem; padding-top: calc(1.25rem + env(safe-area-inset-top)); padding-bottom: calc(1.25rem + env(safe-area-inset-bottom)); overflow-y: auto; }
-    .cl-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem; }
-    .cl-title { font-size: 20px; font-weight: 500; letter-spacing: -0.3px; }
-    .cl-pill { font-size: 12px; color: var(--accent); background: rgba(200,184,154,.12); border: 0.5px solid rgba(200,184,154,.2); border-radius: 99px; padding: 4px 11px; }
-    .prog-track { height: 3px; background: #2a2a2a; border-radius: 99px; overflow: hidden; margin-bottom: 1.1rem; }
-    .prog-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width .5s cubic-bezier(.34,1.56,.64,1); }
-    .task-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.1rem; }
-    .task-row { display: flex; align-items: center; gap: 12px; padding: 15px 16px; background: var(--card); border: 0.5px solid var(--bc); border-radius: 14px; transition: border-color .2s; }
-    .task-row:hover { border-color: var(--bh); }
-    .task-row.done { opacity: .45; }
-    .t-check { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid #444; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; transition: all .2s; }
-    .task-row.done .t-check { background: var(--green); border-color: var(--green); }
-    .t-info { flex: 1; min-width: 0; cursor: pointer; }
-    .t-name { font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .task-row.done .t-name { color: var(--muted); text-decoration: line-through; }
-    .t-hint { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .t-emoji { font-size: 20px; flex-shrink: 0; }
-    .add-row { display: flex; gap: 8px; }
-    .add-input { flex: 1; background: var(--card); border: 0.5px solid var(--bc); border-radius: 10px; padding: 11px 14px; font-size: 15px; color: var(--txt); outline: none; font-family: inherit; }
-    .add-input::placeholder { color: var(--muted); }
-    .add-input:focus { border-color: var(--bh); }
-    .add-btn { padding: 11px 16px; background: var(--card); border: 0.5px solid var(--bc); border-radius: 10px; color: var(--sub); font-size: 22px; cursor: pointer; transition: all .15s; display: flex; align-items: center; justify-content: center; width: 46px; }
-    .add-btn:hover { border-color: var(--bh); color: var(--txt); }
-
     /* ── UNLOCK ── */
     #s-unlock { align-items: center; justify-content: center; text-align: center; padding: 2rem 1.5rem; }
-    .ul-icon { font-size: 40px; margin-bottom: 1.25rem; }
+    .ul-icon { font-size: 48px; margin-bottom: 1.25rem; }
     .ul-title { font-size: 26px; font-weight: 500; margin-bottom: 0.4rem; }
     .ul-sub { font-size: 15px; color: var(--sub); margin-bottom: 0.4rem; line-height: 1.6; }
     .ul-time { font-size: 13px; color: var(--muted); margin-bottom: 1.75rem; }
@@ -134,34 +123,35 @@
 <body>
 <div id="app">
 
-  <!-- LOCK -->
-  <div id="s-lock" class="screen active">
-    <div class="lock-top-row">
-      <button class="icon-btn-sm" onclick="goTo('manage')" aria-label="루틴 편집">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-        </svg>
-      </button>
-    </div>
-    <div class="lock-icon">🔒</div>
-    <div class="lock-title">집에 왔어?</div>
-    <div class="lock-sub">루틴을 완료하면<br>핸드폰을 쓸 수 있어</div>
-    <div class="lock-bar-wrap">
-      <div class="lock-bar-labels">
-        <span><span id="l-done">0</span> / <span id="l-total">5</span> 완료</span>
-        <span id="l-pct">0%</span>
+  <!-- CHECKLIST (홈 화면) -->
+  <div id="s-checklist" class="screen active">
+    <div class="cl-header">
+      <div class="cl-left">
+        <div class="cl-title">귀가 루틴</div>
+        <div class="cl-date" id="cl-date"></div>
       </div>
-      <div class="lock-bar"><div class="lock-bar-fill" id="l-fill" style="width:0%"></div></div>
+      <div class="cl-right">
+        <div class="cl-pill" id="cl-pill">0 / 5</div>
+        <button class="icon-btn-sm" onclick="goTo('manage')" aria-label="루틴 편집">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+        </button>
+      </div>
     </div>
-    <div class="lock-preview" id="l-preview"></div>
-    <button class="start-btn" onclick="goTo('checklist')">루틴 시작하기</button>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="task-list" id="task-list"></div>
+    <div class="add-row">
+      <input class="add-input" id="cl-add-input" placeholder="새 루틴 추가..." maxlength="20">
+      <button class="add-btn" onclick="quickAdd()" aria-label="추가">+</button>
+    </div>
   </div>
 
   <!-- MANAGE -->
   <div id="s-manage" class="screen">
     <div class="mg-header">
-      <button class="back-btn" onclick="goTo('lock')" aria-label="뒤로">
+      <button class="back-btn" onclick="goTo('checklist')" aria-label="뒤로">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="15 18 9 12 15 6"/>
         </svg>
@@ -196,20 +186,6 @@
     </div>
   </div>
 
-  <!-- CHECKLIST -->
-  <div id="s-checklist" class="screen">
-    <div class="cl-header">
-      <div class="cl-title">귀가 루틴</div>
-      <div class="cl-pill" id="cl-pill">0 / 5</div>
-    </div>
-    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-    <div class="task-list" id="task-list"></div>
-    <div class="add-row">
-      <input class="add-input" id="cl-add-input" placeholder="새 루틴 추가..." maxlength="20">
-      <button class="add-btn" onclick="quickAdd()" aria-label="추가">+</button>
-    </div>
-  </div>
-
   <!-- UNLOCK -->
   <div id="s-unlock" class="screen">
     <div class="ul-icon">✅</div>
@@ -230,17 +206,17 @@ const DEFAULT = [
   {id:4,name:'샤워하기',hint:'15분 이내',emoji:'🚿',done:false},
   {id:5,name:'물 한 잔',hint:'수분 보충',emoji:'💧',done:false},
 ];
-const SVG_EDIT = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
+const SVG_EDIT  = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
 const SVG_TRASH = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`;
 const SVG_CHECK = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 
-let tasks, streak, nextId, editId, editFrom;
+let tasks, streak, nextId, editId;
 
 function load() {
   try { tasks = JSON.parse(localStorage.getItem('rt_tasks')); } catch(e) { tasks=null; }
   if (!tasks) tasks = DEFAULT.map(t=>({...t}));
   try { streak = parseInt(localStorage.getItem('rt_streak')||'0'); } catch(e) { streak=0; }
-  nextId = Math.max(...tasks.map(t=>t.id),0)+1;
+  nextId = Math.max(...tasks.map(t=>t.id), 0) + 1;
 }
 function save() {
   try {
@@ -252,70 +228,106 @@ load();
 
 function doneCount() { return tasks.filter(t=>t.done).length; }
 
-const SCREENS = ['s-lock','s-manage','s-checklist','s-unlock'];
+const SCREENS = ['s-checklist','s-manage','s-unlock'];
 function goTo(s) {
-  SCREENS.forEach(id=>document.getElementById(id).classList.remove('active'));
+  SCREENS.forEach(id => document.getElementById(id).classList.remove('active'));
   const ov = document.getElementById('edit-overlay');
-  ov.classList.remove('open'); ov.style.display='';
-  if(s==='lock')      { document.getElementById('s-lock').classList.add('active'); renderLock(); }
-  if(s==='manage')    { document.getElementById('s-manage').classList.add('active'); renderManage(); }
-  if(s==='checklist') { document.getElementById('s-checklist').classList.add('active'); renderChecklist(); }
-  if(s==='unlock')    { document.getElementById('s-unlock').classList.add('active'); renderUnlock(); }
+  ov.classList.remove('open'); ov.style.display = '';
+  if (s==='checklist') { document.getElementById('s-checklist').classList.add('active'); renderChecklist(); }
+  if (s==='manage')    { document.getElementById('s-manage').classList.add('active'); renderManage(); }
+  if (s==='unlock')    { document.getElementById('s-unlock').classList.add('active'); renderUnlock(); }
 }
 
-function renderLock() {
-  const total=tasks.length, done=doneCount();
+/* ── CHECKLIST ── */
+function renderChecklist() {
+  const total = tasks.length, done = doneCount();
   const pct = total ? Math.round(done/total*100) : 0;
-  document.getElementById('l-done').textContent=done;
-  document.getElementById('l-total').textContent=total;
-  document.getElementById('l-pct').textContent=pct+'%';
-  document.getElementById('l-fill').style.width=pct+'%';
-  document.getElementById('l-preview').innerHTML=
-    tasks.slice(0,4).map(t=>`<div class="prev-item ${t.done?'done':''}"><div class="prev-dot"></div><span>${t.emoji||''} ${t.name}</span></div>`).join('')+
-    (tasks.length>4?`<div class="prev-item"><div class="prev-dot"></div><span>+${tasks.length-4}개 더</span></div>`:'');
+  document.getElementById('cl-pill').textContent = done + ' / ' + total;
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  const now = new Date();
+  const days = ['일','월','화','수','목','금','토'];
+  document.getElementById('cl-date').textContent =
+    now.getMonth()+1 + '월 ' + now.getDate() + '일 ' + days[now.getDay()] + '요일';
+
+  document.getElementById('task-list').innerHTML = tasks.map(t => `
+    <div class="task-row ${t.done?'done':''}">
+      <div class="t-check" onclick="toggle(${t.id})">${t.done ? SVG_CHECK : ''}</div>
+      <div class="t-info" onclick="toggle(${t.id})">
+        <div class="t-name">${t.name}</div>
+        ${t.hint ? `<div class="t-hint">${t.hint}</div>` : ''}
+      </div>
+      <div class="t-emoji">${t.emoji||''}</div>
+    </div>`).join('');
 }
 
+function toggle(id) {
+  const t = tasks.find(t=>t.id===id);
+  if (!t) return;
+  t.done = !t.done;
+  save(); renderChecklist();
+  if (tasks.every(t=>t.done)) {
+    streak++; save();
+    setTimeout(()=>goTo('unlock'), 500);
+  }
+}
+
+function quickAdd() {
+  const inp = document.getElementById('cl-add-input');
+  const name = inp.value.trim();
+  if (!name) return;
+  tasks.push({id:nextId++, name, hint:'', emoji:'✨', done:false});
+  inp.value = '';
+  save(); renderChecklist();
+}
+document.getElementById('cl-add-input').addEventListener('keydown', e=>{ if(e.key==='Enter') quickAdd(); });
+
+/* ── MANAGE ── */
 function renderManage() {
-  document.getElementById('mg-list').innerHTML=tasks.map(t=>`
+  document.getElementById('mg-list').innerHTML = tasks.map(t => `
     <div class="mg-row">
       <div class="mg-emoji">${t.emoji||'✨'}</div>
       <div class="mg-info">
         <div class="mg-name">${t.name}</div>
-        ${t.hint?`<div class="mg-hint-text">${t.hint}</div>`:''}
+        ${t.hint ? `<div class="mg-hint-text">${t.hint}</div>` : ''}
       </div>
       <div class="mg-acts">
-        <button class="icon-btn" onclick="openEdit(${t.id},'manage')" aria-label="편집">${SVG_EDIT}</button>
+        <button class="icon-btn" onclick="openEdit(${t.id})" aria-label="편집">${SVG_EDIT}</button>
         <button class="icon-btn del" onclick="confirmDel(${t.id})" aria-label="삭제">${SVG_TRASH}</button>
       </div>
     </div>`).join('');
 }
 
 function confirmDel(id) {
-  const t=tasks.find(t=>t.id===id);
-  if(!t||!confirm(`"${t.name}"을 삭제할까?`)) return;
-  tasks=tasks.filter(t=>t.id!==id);
+  const t = tasks.find(t=>t.id===id);
+  if (!t || !confirm(`"${t.name}"을 삭제할까?`)) return;
+  tasks = tasks.filter(t=>t.id!==id);
   save(); renderManage();
 }
 
 function mgAdd() {
-  const inp=document.getElementById('mg-add-input');
-  const name=inp.value.trim();
-  if(!name) return;
-  tasks.push({id:nextId++,name,hint:'',emoji:'✨',done:false});
-  inp.value=''; save(); renderManage();
+  const inp = document.getElementById('mg-add-input');
+  const name = inp.value.trim();
+  if (!name) return;
+  tasks.push({id:nextId++, name, hint:'', emoji:'✨', done:false});
+  inp.value = '';
+  save(); renderManage();
 }
-document.getElementById('mg-add-input').addEventListener('keydown',e=>{if(e.key==='Enter')mgAdd();});
+document.getElementById('mg-add-input').addEventListener('keydown', e=>{ if(e.key==='Enter') mgAdd(); });
 
-function openEdit(id,from) {
-  editId=id; editFrom=from||'checklist';
-  const t=tasks.find(t=>t.id===id);
-  if(!t) return;
-  document.getElementById('e-name').value=t.name;
-  document.getElementById('e-hint').value=t.hint||'';
-  document.getElementById('emoji-grid').innerHTML=EMOJIS.map(e=>`<button class="emoji-btn ${e===t.emoji?'sel':''}" onclick="selEmoji(this)">${e}</button>`).join('');
+/* ── EDIT MODAL ── */
+function openEdit(id) {
+  editId = id;
+  const t = tasks.find(t=>t.id===id);
+  if (!t) return;
+  document.getElementById('e-name').value = t.name;
+  document.getElementById('e-hint').value = t.hint||'';
+  document.getElementById('emoji-grid').innerHTML = EMOJIS.map(e =>
+    `<button class="emoji-btn ${e===t.emoji?'sel':''}" onclick="selEmoji(this)">${e}</button>`
+  ).join('');
   SCREENS.forEach(id=>document.getElementById(id).classList.remove('active'));
-  const ov=document.getElementById('edit-overlay');
-  ov.style.display='flex'; ov.classList.add('open');
+  const ov = document.getElementById('edit-overlay');
+  ov.style.display = 'flex'; ov.classList.add('open');
 }
 
 function selEmoji(btn) {
@@ -324,77 +336,47 @@ function selEmoji(btn) {
 }
 
 function saveEdit() {
-  const name=document.getElementById('e-name').value.trim();
-  if(!name) return;
-  const sel=document.querySelector('.emoji-btn.sel');
-  const emoji=sel?sel.textContent:'✨';
-  const hint=document.getElementById('e-hint').value.trim();
-  const t=tasks.find(t=>t.id===editId);
-  if(t){t.name=name;t.hint=hint;t.emoji=emoji;}
+  const name = document.getElementById('e-name').value.trim();
+  if (!name) return;
+  const sel = document.querySelector('.emoji-btn.sel');
+  const emoji = sel ? sel.textContent : '✨';
+  const hint = document.getElementById('e-hint').value.trim();
+  const t = tasks.find(t=>t.id===editId);
+  if (t) { t.name=name; t.hint=hint; t.emoji=emoji; }
   save(); closeEdit();
 }
 
 function deleteTask() {
-  const t=tasks.find(t=>t.id===editId);
-  if(!t||!confirm(`"${t.name}"을 삭제할까?`)) return;
-  tasks=tasks.filter(t=>t.id!==editId);
+  const t = tasks.find(t=>t.id===editId);
+  if (!t || !confirm(`"${t.name}"을 삭제할까?`)) return;
+  tasks = tasks.filter(t=>t.id!==editId);
   save(); closeEdit();
 }
 
 function closeEdit() {
-  const ov=document.getElementById('edit-overlay');
-  ov.classList.remove('open'); ov.style.display='';
-  goTo(editFrom);
+  const ov = document.getElementById('edit-overlay');
+  ov.classList.remove('open'); ov.style.display = '';
+  goTo('manage');
 }
 
-function renderChecklist() {
-  const total=tasks.length,done=doneCount();
-  const pct=total?Math.round(done/total*100):0;
-  document.getElementById('cl-pill').textContent=done+' / '+total;
-  document.getElementById('prog-fill').style.width=pct+'%';
-  document.getElementById('task-list').innerHTML=tasks.map(t=>`
-    <div class="task-row ${t.done?'done':''}">
-      <div class="t-check" onclick="toggle(${t.id})">${t.done?SVG_CHECK:''}</div>
-      <div class="t-info" onclick="toggle(${t.id})">
-        <div class="t-name">${t.name}</div>
-        ${t.hint?`<div class="t-hint">${t.hint}</div>`:''}
-      </div>
-      <div class="t-emoji">${t.emoji||''}</div>
-    </div>`).join('');
-}
-
-function toggle(id) {
-  const t=tasks.find(t=>t.id===id);
-  if(!t) return;
-  t.done=!t.done; save(); renderChecklist();
-  if(tasks.every(t=>t.done)){streak++;save();setTimeout(()=>goTo('unlock'),500);}
-}
-
-function quickAdd() {
-  const inp=document.getElementById('cl-add-input');
-  const name=inp.value.trim();
-  if(!name) return;
-  tasks.push({id:nextId++,name,hint:'',emoji:'✨',done:false});
-  inp.value=''; save(); renderChecklist();
-}
-document.getElementById('cl-add-input').addEventListener('keydown',e=>{if(e.key==='Enter')quickAdd();});
-
+/* ── UNLOCK ── */
 function renderUnlock() {
-  const now=new Date();
-  document.getElementById('ul-time').textContent=
-    now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0')+' 완료';
-  const show=Math.min(streak,7);
-  document.getElementById('streak-row').innerHTML=
-    Array.from({length:7},(_,i)=>`<div class="s-dot ${i<show?'on':''}"></div>`).join('')+
-    (streak>0?`<span class="s-label">${streak}일 연속</span>`:'');
+  const now = new Date();
+  document.getElementById('ul-time').textContent =
+    now.getHours().toString().padStart(2,'0') + ':' +
+    now.getMinutes().toString().padStart(2,'0') + ' 완료';
+  const show = Math.min(streak, 7);
+  document.getElementById('streak-row').innerHTML =
+    Array.from({length:7}, (_,i) => `<div class="s-dot ${i<show?'on':''}"></div>`).join('') +
+    (streak > 0 ? `<span class="s-label">${streak}일 연속</span>` : '');
 }
 
 function reset() {
-  tasks=tasks.map(t=>({...t,done:false}));
-  save(); goTo('lock');
+  tasks = tasks.map(t=>({...t, done:false}));
+  save(); goTo('checklist');
 }
 
-renderLock();
+renderChecklist();
 </script>
 </body>
 </html>
